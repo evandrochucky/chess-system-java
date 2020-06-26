@@ -8,13 +8,25 @@ import chess.pieces.Rook;
 
 public class ChessMatch {
 	
+	private int turn;
+	private Color currentPlayer;
 	private Board board;
 	
 	public ChessMatch() {
 		// aqui se define o tamanho do tabuleiro do xadrez
 		// inicia a partida
 		board = new Board(8,8);
+		turn = 1;
+		currentPlayer = Color.WHITE;
 		initialSetup();
+	}
+	
+	public int getTurn() {
+		return turn;
+	}
+	
+	public Color getCurretPlayer() {
+		return currentPlayer;
 	}
 	
 	// processo para retornar a matriz de peças da partida de xadrez
@@ -42,6 +54,7 @@ public class ChessMatch {
 		validateSourcePosition(source);
 		validateTargetPosition(source, target);
 		Piece capturedPiece = makeMove(source, target);
+		nextTurn();
 		return (ChessPiece) capturedPiece;
 		
 	}
@@ -57,6 +70,9 @@ public class ChessMatch {
 		if (!board.thereIsAPiece(position)) {
 			throw new ChessException("There is no piece in source position.");
 		}
+		if (currentPlayer != ((ChessPiece)board.piece(position)).getColor()) {
+			throw new ChessException("The chosen piece is not yours.");
+		}
 		if(!board.piece(position).isThereAnyPossibleMove()) {
 			throw new ChessException("There is no moves for the chosen piece.");
 		}
@@ -66,6 +82,12 @@ public class ChessMatch {
 		if(!board.piece(source).possibleMove(target)) {
 			throw new ChessException("The chosen piece can't move to target position.");
 		}
+	}
+	
+	private void nextTurn() {
+		turn++;
+		currentPlayer = (currentPlayer == Color.WHITE) ? Color.BLACK : Color.WHITE;
+		
 	}
 	
 	//Instanciar as peças do xadrez informando as coordenadas do sistema do Xadrez
