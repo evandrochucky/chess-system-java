@@ -16,6 +16,10 @@ public abstract class ChessPiece extends Piece {
 	public Color getColor() {
 		return color;
 	}
+	
+	public ChessPosition getChessPosition(){
+		return ChessPosition.fromPosition(position);
+	}
 
 	/* a cor de uma peça não pode ser modificada
 	public void setColor(Color color) {

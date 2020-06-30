@@ -67,6 +67,10 @@ public class UI {
 		System.out.println();
 		System.out.println("Turn: " + chessMatch.getTurn());
 		System.out.println("Waiting player: " + chessMatch.getCurretPlayer());
+		
+		if(chessMatch.getCheck()) {
+			System.out.println("CHECK!");
+		}
 	}
 
 	// Imprimir o Tabuleiro
